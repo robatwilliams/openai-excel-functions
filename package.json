@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "openai-excel-formulas",
+  "version": "1.0.0",
+  "description": "Invoke the OpenAI API calls from formula.",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server --tls --port 3000 --cors -c-1"
+  },
+  "author": "Chris Price & Robat Williams",
+  "homepage": "https://github.com/robatwilliams/openai-excel-formulas",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
