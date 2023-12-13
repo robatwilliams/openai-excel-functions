@@ -60,8 +60,8 @@
         <bt:Image id="Icon.80x80" DefaultValue="https://robatwilliams.github.io/openai-excel-formulas/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Functions.Script.Url" DefaultValue="https://github.com/robatwilliams/openai-excel-formulas/src/functions/functions.js"/>
-        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://github.com/robatwilliams/openai-excel-formulas/src/functions/functions.json"/>
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://robatwilliams.github.io/openai-excel-formulas/src/functions/functions.js"/>
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://robatwilliams.github.io/openai-excel-formulas/src/functions/functions.json"/>
         <bt:Url id="Shared.Url" DefaultValue="https://robatwilliams.github.io/openai-excel-formulas/index.html"/>
       </bt:Urls>
       <bt:ShortStrings>
