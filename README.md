@@ -11,12 +11,12 @@
 | Path | Description |
 | ---- | ----------- |
 | assets/*.png | Icons of various sizes |
+| src/functions/functions.js | The JavaScript functions which implement the formulas. |
+| src/functions/functions.json | The metadata which details each formula and references its implementation. |
 | index.html | Root page loaded in the background during plugin startup. |
 | manifest-local.xml | A version of manifest.xml which references https://localhost:3000/ for plugin development use. |
 | manifest.xml | Configures where the plugin should be loaded from and what features it will make use of. |
 | package[-lock].json | Lists NPM dependencies. Used only during plugin development. |
-| functions.js | The JavaScript functions which implement the formulas. |
-| functions.json | The metadata which details each formula and references its implementation. |
 | README.md | This file. |
 
 ## Plugin development
