@@ -43,6 +43,28 @@
       "result": {
         "type": "string"
       }
+    },
+    {
+      "description": "Calculate the cost of the completions in the given cells",
+      "id": "COST",
+      "name": "COST",
+      "parameters": [
+        {
+          "name": "completions",
+          "description": "A cell or range of cells containing chat completions.",
+          "type": "any",
+          "dimensionality": "matrix"
+        },
+        {
+          "name": "prices",
+          "description": "The prices per 1K tokens for each model. The first column is the canonical model name, the second is the input token price, and the third is the output token price.",
+          "type": "any",
+          "dimensionality": "matrix"
+        }
+      ],
+      "result": {
+        "type": "number"
+      }
     }
   ]
 }

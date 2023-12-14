@@ -60,6 +60,35 @@
   }
 });
 
+// Terminology note: our _cost_ is driven by usage and OpenAI's _prices_.
+CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
+  const completions = completionsMatrix.flat().filter(
+    (value) => value !== 0, // Empty value in range
+  );
+  const allPrices = Object.fromEntries(
+    pricesMatrix.map((row) => [row[0], { input: row[1], output: row[2] }]),
+  );
+
+  return completions.reduce((accumulator, completion) => {
+    const model = completion.properties.response.properties.model.basicValue;
+    const usage = completion.properties.response.properties.usage.properties;
+    const modelPrices = allPrices[model];
+
+    if (!modelPrices) {
+      throw new CustomFunctions.Error(
+        CustomFunctions.ErrorCode.invalidValue,
+        `No pricing specified for model ${model}`,
+      );
+    }
+
+    return (
+      accumulator +
+      (usage.prompt_tokens.basicValue / 1000) * modelPrices.input +
+      (usage.completion_tokens.basicValue / 1000) * modelPrices.output
+    );
+  }, 0);
+});
+
 CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
   if (separator === null) {
     // This default value must be kept in sync with documentation in the function metadata.
