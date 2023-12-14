@@ -10,7 +10,7 @@
   "scripts": {
     "start": "http-server --tls --port 3000 --cors -c-1"
   },
-  "dependencies": {
+  "devDependencies": {
     "http-server": "^14.1.1"
   }
 }
