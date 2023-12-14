@@ -60,6 +60,28 @@
   }
 });
 
+CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
+  if (separator === null) {
+    // This default value must be kept in sync with documentation in the function metadata.
+    separator = '<!-- END CoT -->';
+  }
+
+  const halves = completion.text.split(separator, 2);
+
+  if (halves.length !== 2) {
+    throw new CustomFunctions.Error(
+      CustomFunctions.ErrorCode.invalidValue,
+      'Completion does not split into two by the separator',
+    );
+  }
+
+  const answer = halves[1];
+
+  // Models have a strong tendency to put a newline after the separator, and
+  // it's difficult to prompt GPT 3.5T to consistently do anything different.
+  return answer[0] === '\n' ? answer.substring(1) : answer;
+});
+
 function toEntityCellValueProperties(value) {
   if (value === null) {
     return '';
