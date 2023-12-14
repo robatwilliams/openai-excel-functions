@@ -37,9 +37,39 @@
       throw Error(`API error: ${response.status} ${response.statusText}`);
     }
 
-    return json.choices[0].message.content;
+    return {
+      type: Excel.CellValueType.entity,
+      text: json.choices[0].message.content,
+      properties: {
+        response: toEntityCellValueProperties(json),
+      },
+      basicType: Excel.RangeValueType.error,
+      basicValue: '#VALUE!',
+    };
   }
   catch (e) {
     throw new CustomFunctions.Error(CustomFunctions.ErrorCode.notAvailable, e.message);
   }
 });
+
+function toEntityCellValueProperties(value) {
+  if (value === null) {
+    return '';
+  } else if (typeof value !== 'object') {
+    return value;
+  } else if (Array.isArray(value)) {
+    return value.map((element) => toEntityCellValueProperties(element));
+  } else {
+    return {
+      type: Excel.CellValueType.entity,
+      text: 'Entity...',
+      properties: mapObject(value, toEntityCellValueProperties),
+    };
+  }
+}
+
+function mapObject(object, callback) {
+  return Object.fromEntries(
+    Object.entries(object).map(([key, value]) => [key, callback(value)])
+  );
+}

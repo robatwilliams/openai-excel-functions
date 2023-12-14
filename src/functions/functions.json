@@ -1,4 +1,5 @@
 {
+    "allowCustomDataForDataTypeAny": true,
     "functions": [
         {
             "description": "Complete the chat using a model",
@@ -19,8 +20,7 @@
                 }
             ],
             "result": {
-                "type": "string",
-                "dimensionality": "scalar"
+                "type": "any"
             }
         }
     ]
