@@ -1,27 +1,27 @@
 {
-    "allowCustomDataForDataTypeAny": true,
-    "functions": [
+  "allowCustomDataForDataTypeAny": true,
+  "functions": [
+    {
+      "description": "Complete the chat using a model",
+      "id": "CHAT_COMPLETE",
+      "name": "CHAT_COMPLETE",
+      "parameters": [
         {
-            "description": "Complete the chat using a model",
-            "id": "CHAT_COMPLETE",
-            "name": "CHAT_COMPLETE",
-            "parameters": [
-                {
-                    "name": "messages",
-                    "description": "Either a single message (which will be used as the content of a user message and prefixed with a default system message) or a range of cells containing messages (the first column will be used as the role, the second column as the message and subsequent columns will be ignored).",
-                    "type": "string",
-                    "dimensionality": "matrix"
-                },
-                {
-                    "name": "params",
-                    "description": "The parameters for the model call. The first column is used as parameter keys and the second as values. Subsequent columns are ignored. If a key is repeated in later rows, the value given in the later row replaces the value given in the earlier row.",
-                    "type": "any",
-                    "dimensionality": "matrix"
-                }
-            ],
-            "result": {
-                "type": "any"
-            }
+          "name": "messages",
+          "description": "Either a single message (which will be used as the content of a user message and prefixed with a default system message) or a range of cells containing messages (the first column will be used as the role, the second column as the message and subsequent columns will be ignored).",
+          "type": "string",
+          "dimensionality": "matrix"
+        },
+        {
+          "name": "params",
+          "description": "The parameters for the model call. The first column is used as parameter keys and the second as values. Subsequent columns are ignored. If a key is repeated in later rows, the value given in the later row replaces the value given in the earlier row.",
+          "type": "any",
+          "dimensionality": "matrix"
         }
-    ]
+      ],
+      "result": {
+        "type": "any"
+      }
+    }
+  ]
 }

@@ -1,17 +1,20 @@
-﻿CustomFunctions.associate("CHAT_COMPLETE", async (messages, params) => {
+﻿CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
   const {
     API_KEY: apiKey,
-    API_BASE: apiBase = "https://api.openai.com/",
+    API_BASE: apiBase = 'https://api.openai.com/',
     messages: _,
     ...userParams
   } = Object.fromEntries(params);
   if (apiKey == null) {
-    throw new CustomFunctions.Error(CustomFunctions.ErrorCode.invalidValue, "API_KEY is required");
+    throw new CustomFunctions.Error(
+      CustomFunctions.ErrorCode.invalidValue,
+      'API_KEY is required',
+    );
   }
   if (messages.length === 1 && messages[0].length === 1) {
     messages = [
-      ["system", "You are a helpful assistant."],
-      ["user", messages[0][0]]
+      ['system', 'You are a helpful assistant.'],
+      ['user', messages[0][0]],
     ];
   }
   try {
@@ -19,11 +22,11 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         ...userParams,
-        messages: messages.map(([role, content]) => ({ role, content }))
+        messages: messages.map(([role, content]) => ({ role, content })),
       }),
     });
 
@@ -46,9 +49,11 @@
       basicType: Excel.RangeValueType.error,
       basicValue: '#VALUE!',
     };
-  }
-  catch (e) {
-    throw new CustomFunctions.Error(CustomFunctions.ErrorCode.notAvailable, e.message);
+  } catch (e) {
+    throw new CustomFunctions.Error(
+      CustomFunctions.ErrorCode.notAvailable,
+      e.message,
+    );
   }
 });
 
@@ -70,6 +75,6 @@ function toEntityCellValueProperties(value) {
 
 function mapObject(object, callback) {
   return Object.fromEntries(
-    Object.entries(object).map(([key, value]) => [key, callback(value)])
+    Object.entries(object).map(([key, value]) => [key, callback(value)]),
   );
 }

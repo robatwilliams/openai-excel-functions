@@ -11,6 +11,7 @@
     "start": "http-server --tls --port 3000 --cors -c-1"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "prettier": "^3.1.1"
   }
 }
