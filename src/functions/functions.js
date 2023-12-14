@@ -5,7 +5,7 @@
     messages: _,
     ...userParams
   } = Object.fromEntries(params);
-  if (apiKey == null) {
+  if (apiKey == null || apiKey === 0) {
     throw new CustomFunctions.Error(
       CustomFunctions.ErrorCode.invalidValue,
       'API_KEY is required',
