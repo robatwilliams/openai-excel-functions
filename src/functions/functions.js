@@ -30,14 +30,17 @@
       }),
     });
 
+    if (
+      !response.ok &&
+      !response.headers.get('Content-Type').startsWith('application/json')
+    ) {
+      throw Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
     const json = await response.json();
 
     if (json.error != null) {
       throw Error(`API error: ${json.error.message}`);
-    }
-
-    if (!response.ok) {
-      throw Error(`API error: ${response.status} ${response.statusText}`);
     }
 
     return {
