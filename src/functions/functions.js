@@ -1,16 +1,16 @@
 ﻿CustomFunctions.associate("CHAT_COMPLETE", async (messages, params) => {
-  const { 
-    API_KEY: apiKey, 
+  const {
+    API_KEY: apiKey,
     API_BASE: apiBase = "https://api.openai.com/",
-    messages: _, 
-    ...userParams 
+    messages: _,
+    ...userParams
   } = Object.fromEntries(params);
   if (apiKey == null) {
     throw new CustomFunctions.Error(CustomFunctions.ErrorCode.invalidValue, "API_KEY is required");
   }
   if (messages.length === 1 && messages[0].length === 1) {
     messages = [
-      ["system", "You are a helpful assistant."], 
+      ["system", "You are a helpful assistant."],
       ["user", messages[0][0]]
     ];
   }

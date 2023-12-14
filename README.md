@@ -25,7 +25,7 @@
 2. Follow these instructions to [generate an cert-key pair](https://github.com/http-party/http-server#tlsssl).
 3. Run the local server (`npm start`).
 4. Navigate to the [root](https://localhost:3000/) in your browser and temporarily trust the newly created cert-key pair.
-4. Open a spreadsheet in Excel on the web and append the following query string parameters 
+4. Open a spreadsheet in Excel on the web and append the following query string parameters
 ```
 wdaddindevserverport=3000&wdaddinmanifestfile=manifest-localhost.xml&wdaddinmanifestguid=00aeeb98-f4d9-4db0-a1e6-cdc652c08e34
 ```
