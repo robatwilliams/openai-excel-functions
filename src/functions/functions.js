@@ -107,7 +107,8 @@ CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
   }, 0);
 });
 
-CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
+CustomFunctions.associate('COT_ANSWER', cotAnswer);
+function cotAnswer(completion, separator) {
   validateIsCompletion(completion);
 
   if (separator === null) {
@@ -134,7 +135,7 @@ CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
   // Models have a strong tendency to put a newline after the separator, and
   // it's difficult to prompt GPT 3.5T to consistently do anything different.
   return answer[0] === '\n' ? answer.substring(1) : answer;
-});
+}
 
 function toEntityProperty(value) {
   if (value === null) {
@@ -175,4 +176,11 @@ function mapObject(object, callback) {
   return Object.fromEntries(
     Object.entries(object).map(([key, value]) => [key, callback(value)]),
   );
+}
+
+// For unit testing.
+if (typeof module === 'object') {
+  module.exports = {
+    cotAnswer,
+  };
 }
