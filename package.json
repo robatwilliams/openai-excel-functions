@@ -8,10 +8,14 @@
   "author": "Chris Price & Robat Williams",
   "main": "index.js",
   "scripts": {
-    "start": "http-server --tls --port 3000 --cors -c-1"
+    "install-certs": "office-addin-dev-certs install --days 3650",
+    "sideload:desktop": "office-addin-debugging start manifest-localhost.xml desktop --no-debug",
+    "start": "http-server --tls --cert ~/.office-addin-dev-certs/localhost.crt --key ~/.office-addin-dev-certs/localhost.key --port 3000 --cors -c-1"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
+    "office-addin-debugging": "^5.0.14",
+    "office-addin-dev-certs": "^1.12.0",
     "prettier": "^3.1.1"
   }
 }
