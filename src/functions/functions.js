@@ -112,8 +112,9 @@ CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
     separator = '<!-- END CoT -->';
   }
 
+  const choiceIndex = 0;
   const choiceEntity =
-    completion.properties.response.properties.choices.elements[0][0];
+    completion.properties.response.properties.choices.elements[0][choiceIndex];
   const choiceContent =
     choiceEntity.properties.message.properties.content.basicValue;
   const halves = choiceContent.split(separator, 2);
@@ -138,7 +139,11 @@ function toEntityProperty(value) {
   } else if (typeof value !== 'object') {
     return value;
   } else if (Array.isArray(value)) {
-    return value.map((element) => toEntityProperty(element));
+    return {
+      // An array in this context is really a matrix.
+      type: Excel.CellValueType.array,
+      elements: [value.map((element) => toEntityProperty(element))],
+    };
   } else {
     return {
       type: Excel.CellValueType.entity,
