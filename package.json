@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "install-certs": "office-addin-dev-certs install --days 3650",
+    "prettier:check": "prettier --check .",
     "sideload:desktop": "office-addin-debugging start manifest-localhost.xml desktop --no-debug",
     "start": "http-server --tls --cert ~/.office-addin-dev-certs/localhost.crt --key ~/.office-addin-dev-certs/localhost.key --port 3000 --cors -c-1",
     "test": "node --test --require=./testFramework/excelStubs.cjs"
