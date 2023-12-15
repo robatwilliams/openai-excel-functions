@@ -5,18 +5,21 @@
     messages: _,
     ...userParams
   } = Object.fromEntries(params);
+
   if (apiKey == null || apiKey === 0) {
     throw new CustomFunctions.Error(
       CustomFunctions.ErrorCode.invalidValue,
       'API_KEY is required',
     );
   }
+
   if (messages.length === 1 && messages[0].length === 1) {
     messages = [
       ['system', 'You are a helpful assistant.'],
       ['user', messages[0][0]],
     ];
   }
+
   try {
     const response = await fetch(`${apiBase}v1/chat/completions`, {
       method: 'POST',
