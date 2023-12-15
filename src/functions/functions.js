@@ -57,7 +57,7 @@
             ? json.choices[0].message.content.split('\n')
             : json.choices.map((choice) => choice.message.content.split('\n')),
 
-        response: toEntityCellValueProperties(json),
+        response: toEntityProperty(json),
       },
       basicType: Excel.RangeValueType.error,
       basicValue: '#VALUE!',
@@ -125,18 +125,18 @@ CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
   return answer[0] === '\n' ? answer.substring(1) : answer;
 });
 
-function toEntityCellValueProperties(value) {
+function toEntityProperty(value) {
   if (value === null) {
     return '';
   } else if (typeof value !== 'object') {
     return value;
   } else if (Array.isArray(value)) {
-    return value.map((element) => toEntityCellValueProperties(element));
+    return value.map((element) => toEntityProperty(element));
   } else {
     return {
       type: Excel.CellValueType.entity,
       text: 'Entity...',
-      properties: mapObject(value, toEntityCellValueProperties),
+      properties: mapObject(value, toEntityProperty),
     };
   }
 }
