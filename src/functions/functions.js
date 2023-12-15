@@ -105,7 +105,11 @@ CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
     separator = '<!-- END CoT -->';
   }
 
-  const halves = completion.text.split(separator, 2);
+  const choiceEntity =
+    completion.properties.response.properties.choices.elements[0][0];
+  const choiceContent =
+    choiceEntity.properties.message.properties.content.basicValue;
+  const halves = choiceContent.split(separator, 2);
 
   if (halves.length !== 2) {
     throw new CustomFunctions.Error(
