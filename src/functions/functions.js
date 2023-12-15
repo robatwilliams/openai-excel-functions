@@ -24,16 +24,18 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
   }
 
   try {
+    const requestBody = {
+      ...userParams,
+      messages: messages.map(([role, content]) => ({ role, content })),
+    };
+
     const response = await fetch(`${apiBase}v1/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify({
-        ...userParams,
-        messages: messages.map(([role, content]) => ({ role, content })),
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (
@@ -61,6 +63,7 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
             ? json.choices[0].message.content.split('\n')
             : json.choices.map((choice) => choice.message.content.split('\n')),
 
+        requestBody: toEntityProperty(requestBody),
         response: toEntityProperty(json),
       },
       basicType: Excel.RangeValueType.error,
