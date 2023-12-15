@@ -55,7 +55,10 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
       type: Excel.CellValueType.entity,
       text: json.choices[0].message.content,
       properties: {
-        entityKind: COMPLETION_ENTITY_KIND,
+        // These are accessible using formulas. Prefix any that are only for
+        // this addin's use, or only for display use, with _.
+
+        _entityKind: COMPLETION_ENTITY_KIND,
 
         // For visibility of newlines without needing to use cell text wrap.
         _lines:
@@ -161,7 +164,7 @@ function validateIsCompletion(anyTypedParameter) {
   if (
     !(
       anyTypedParameter.type === Excel.CellValueType.entity &&
-      anyTypedParameter.properties.entityKind.basicValue ===
+      anyTypedParameter.properties._entityKind.basicValue ===
         COMPLETION_ENTITY_KIND
     )
   ) {

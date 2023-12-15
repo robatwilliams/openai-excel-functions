@@ -5,12 +5,12 @@ export function makeCompletionEntity({ content }) {
     basicValue: '#VALUE!',
     text: undefined, // Not for programmatic use
     properties: {
-      _lines: undefined, // Not for programmatic use
-      entityKind: {
+      _entityKind: {
         type: 'String',
         basicType: 'String',
         basicValue: 'openai-excel-formulas:chat-completion',
       },
+      _lines: undefined, // Not for programmatic use
       requestBody: {
         type: 'Entity',
         basicType: 'Error',
