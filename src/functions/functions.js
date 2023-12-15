@@ -47,14 +47,15 @@
       throw Error(`API error: ${json.error.message}`);
     }
 
-    const completion = json.choices[0].message.content;
-
     return {
       type: Excel.CellValueType.entity,
-      text: completion,
+      text: json.choices[0].message.content,
       properties: {
         // For visibility of newlines without needing to use cell text wrap.
-        completionLines: completion.split('\n'),
+        _lines:
+          json.choices.length === 1
+            ? json.choices[0].message.content.split('\n')
+            : json.choices.map((choice) => choice.message.content.split('\n')),
 
         response: toEntityCellValueProperties(json),
       },
