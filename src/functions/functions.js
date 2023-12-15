@@ -1,4 +1,6 @@
-﻿CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
+﻿const COMPLETION_ENTITY_KIND = 'openai-excel-formulas:chat-completion';
+
+CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
   const {
     API_KEY: apiKey,
     API_BASE: apiBase = 'https://api.openai.com/',
@@ -51,6 +53,8 @@
       type: Excel.CellValueType.entity,
       text: json.choices[0].message.content,
       properties: {
+        entityKind: COMPLETION_ENTITY_KIND,
+
         // For visibility of newlines without needing to use cell text wrap.
         _lines:
           json.choices.length === 1
@@ -75,6 +79,7 @@ CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
   const completions = completionsMatrix.flat().filter(
     (value) => value !== 0, // Empty value in range
   );
+  completions.forEach(validateIsCompletion);
   const allPrices = Object.fromEntries(
     pricesMatrix.map((row) => [row[0], { input: row[1], output: row[2] }]),
   );
@@ -100,6 +105,8 @@ CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
 });
 
 CustomFunctions.associate('COT_ANSWER', (completion, separator) => {
+  validateIsCompletion(completion);
+
   if (separator === null) {
     // This default value must be kept in sync with documentation in the function metadata.
     separator = '<!-- END CoT -->';
@@ -138,6 +145,21 @@ function toEntityProperty(value) {
       text: 'Entity...',
       properties: mapObject(value, toEntityProperty),
     };
+  }
+}
+
+function validateIsCompletion(anyTypedParameter) {
+  if (
+    !(
+      anyTypedParameter.type === Excel.CellValueType.entity &&
+      anyTypedParameter.properties.entityKind.basicValue ===
+        COMPLETION_ENTITY_KIND
+    )
+  ) {
+    throw new CustomFunctions.Error(
+      CustomFunctions.ErrorCode.invalidValue,
+      'Completion in parameter value is not a CHAT_COMPLETE() completion',
+    );
   }
 }
 
