@@ -3,6 +3,7 @@
     API_KEY: apiKey,
     API_BASE: apiBase = 'https://api.openai.com/',
     messages: _,
+    0: __, // Empty key cell in range
     ...userParams
   } = Object.fromEntries(params);
 
