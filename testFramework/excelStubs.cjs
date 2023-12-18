@@ -1,5 +1,9 @@
 // Copy Excel constants from DevTools using "copy object".
 
+global.fetch = () => {
+  throw new Error('fetch() must be mocked');
+};
+
 global.CustomFunctions = {
   Error: class CustomFunctionsError {
     constructor(code, message) {
@@ -34,5 +38,16 @@ global.Excel = {
     string: 'String',
     notAvailable: 'NotAvailable',
     webImage: 'WebImage',
+  },
+
+  RangeValueType: {
+    unknown: 'Unknown',
+    empty: 'Empty',
+    string: 'String',
+    integer: 'Integer',
+    double: 'Double',
+    boolean: 'Boolean',
+    error: 'Error',
+    richValue: 'RichValue',
   },
 };

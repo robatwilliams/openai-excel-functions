@@ -3,7 +3,7 @@ export function makeCompletionEntity({
   modelUsed,
   tokensPrompt,
   tokensCompletion,
-}) {
+} = {}) {
   return {
     type: 'Entity',
     basicType: 'Error',

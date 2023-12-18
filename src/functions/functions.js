@@ -1,6 +1,7 @@
 ﻿const COMPLETION_ENTITY_KIND = 'openai-excel-formulas:chat-completion';
 
-CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
+CustomFunctions.associate('CHAT_COMPLETE', chatComplete);
+async function chatComplete(messages, params) {
   const {
     API_KEY: apiKey,
     API_BASE: apiBase = 'https://api.openai.com/',
@@ -26,7 +27,9 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
   try {
     const requestBody = {
       ...userParams,
-      messages: messages.map(([role, content]) => ({ role, content })),
+      messages: messages
+        .filter(([role]) => role !== 0)
+        .map(([role, content]) => ({ role, content })),
     };
 
     const response = await fetch(`${apiBase}v1/chat/completions`, {
@@ -78,7 +81,7 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
       e.message,
     );
   }
-});
+}
 
 // Terminology note: our _cost_ is driven by usage and OpenAI's _prices_.
 CustomFunctions.associate('COST', cost);
@@ -185,6 +188,7 @@ function mapObject(object, callback) {
 // For unit testing.
 if (typeof module === 'object') {
   module.exports = {
+    chatComplete,
     cost,
     cotAnswer,
   };

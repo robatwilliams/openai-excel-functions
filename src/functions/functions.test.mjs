@@ -1,7 +1,178 @@
 import assert from 'node:assert';
-import { describe, it, mock } from 'node:test';
+import { describe, it } from 'node:test';
 import { makeCompletionEntity } from '../../testFramework/completionEntityStub.mjs';
-import { cost, cotAnswer } from './functions.js';
+import { chatComplete, cost, cotAnswer } from './functions.js';
+import { makeCompletionResponse } from '../../testFramework/completionResponseStub.mjs';
+
+describe('CHAT_COMPLETE', () => {
+  it('makes a completion for given messages', async (t) => {
+    const mockResponseBody = makeCompletionResponse({ content: 'Hello' });
+    t.mock.method(global, 'fetch', () => mockResponseOk(mockResponseBody));
+
+    const completion = await chatComplete(
+      [['user', 'Say hello']],
+      [['API_KEY', 'someapikey']],
+    );
+
+    const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
+    assert.deepStrictEqual(requestBody.messages, [
+      { role: 'user', content: 'Say hello' },
+    ]);
+
+    assert.strictEqual(completion.text, 'Hello');
+  });
+
+  it('assembles messages structure for a single-cell prompt', async (t) => {
+    t.mock.method(global, 'fetch', () =>
+      mockResponseOk(makeCompletionResponse()),
+    );
+
+    await chatComplete([['Say hello']], [['API_KEY', 'someapikey']]);
+
+    const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
+    assert.deepStrictEqual(requestBody.messages[1], {
+      role: 'user',
+      content: 'Say hello',
+    });
+  });
+
+  it('does not propagate empty cells in the messages range to the API', async (t) => {
+    t.mock.method(global, 'fetch', () =>
+      mockResponseOk(makeCompletionResponse()),
+    );
+
+    await chatComplete(
+      [
+        ['user', 'Say hello'],
+        [0, 0],
+      ],
+      [['API_KEY', 'someapikey']],
+    );
+
+    const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
+    assert.strictEqual(requestBody.messages.length, 1);
+  });
+
+  it('propagates only the user parameters to the API', async (t) => {
+    t.mock.method(global, 'fetch', () =>
+      mockResponseOk(makeCompletionResponse()),
+    );
+
+    await chatComplete(
+      [['Say hello']],
+      [
+        ['API_KEY', 'someapikey'],
+        ['temperature', 0.3],
+      ],
+    );
+
+    const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
+    assert.strictEqual(requestBody.temperature, 0.3);
+    assert(!('API_KEY' in requestBody));
+  });
+
+  it('does not propagate empty cells in the params range to the API', async (t) => {
+    const mockResponseBody = {
+      id: 'chatcmpl-8X6b8XW77Md4oc06Yd3tc18lFzqT9',
+      object: 'chat.completion',
+      created: 0,
+      model: 'gpt-3.5-turbo-0613',
+      choices: [
+        {
+          index: 0,
+          message: { role: 'assistant', content: 'Hello' },
+          logprobs: null,
+          finish_reason: 'stop',
+        },
+      ],
+      usage: { prompt_tokens: 78, completion_tokens: 23, total_tokens: 101 },
+      system_fingerprint: null,
+    };
+    t.mock.method(global, 'fetch', () => mockResponseOk(mockResponseBody));
+
+    await chatComplete(
+      [['user', 'Say hello']],
+      [
+        ['API_KEY', 'someapikey'],
+        [0, 0],
+      ],
+    );
+
+    const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
+    assert(!('0' in requestBody));
+  });
+
+  it('throws an error when no API key is provided - key absent', () => {
+    assert.rejects(() => chatComplete([['Say hello']], []), {
+      code: '#VALUE!',
+      message: 'API_KEY is required',
+    });
+  });
+
+  it('throws an error when no API key is provided - value cell empty', () => {
+    assert.rejects(() => chatComplete([['Say hello']], [['API_KEY', 0]]), {
+      code: '#VALUE!',
+      message: 'API_KEY is required',
+    });
+  });
+
+  it('throws an error for an API error with a provided message', (t) => {
+    const errorResponseBody = {
+      error: {
+        message: "0 is less than the minimum of 1 - 'n'",
+        type: 'invalid_request_error',
+        param: null,
+        code: null,
+      },
+    };
+    t.mock.method(
+      global,
+      'fetch',
+      async () =>
+        new Response(JSON.stringify(errorResponseBody), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+    );
+
+    assert.rejects(
+      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']]),
+      {
+        code: '#N/A',
+        message: "API error: 0 is less than the minimum of 1 - 'n'",
+      },
+    );
+  });
+
+  it('throws an error for an API error not providing a message', (t) => {
+    const errorResponseBody = {
+      error: {
+        message: "0 is less than the minimum of 1 - 'n'",
+        type: 'invalid_request_error',
+        param: null,
+        code: null,
+      },
+    };
+    t.mock.method(
+      global,
+      'fetch',
+      async () =>
+        new Response('', {
+          status: 502,
+          statusText: 'Bad Gateway',
+          headers: { 'Content-Type': 'text/plain' },
+        }),
+    );
+
+    assert.rejects(
+      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']]),
+      {
+        code: '#N/A',
+        message: 'API error: 502 Bad Gateway',
+      },
+    );
+  });
+});
 
 describe('COST', () => {
   it('calculates the cost of a single completion', () => {
@@ -45,7 +216,7 @@ describe('COST', () => {
 });
 
 describe('COT_ANSWER', () => {
-  it('extracts the answer (basic case)', () => {
+  it('extracts the answer', () => {
     const completion = makeCompletionEntity({
       content:
         'The color of the door has been explicitly stated in the provided statement.\n\n<!-- END CoT -->\nBlue',
@@ -81,3 +252,10 @@ describe('COT_ANSWER', () => {
     assert.strictEqual(cotAnswer(completion, null), 'Blue');
   });
 });
+
+async function mockResponseOk(body) {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
