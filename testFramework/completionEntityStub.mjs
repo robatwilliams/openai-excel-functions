@@ -1,4 +1,9 @@
-export function makeCompletionEntity({ content }) {
+export function makeCompletionEntity({
+  content,
+  modelUsed,
+  tokensPrompt,
+  tokensCompletion,
+}) {
   return {
     type: 'Entity',
     basicType: 'Error',
@@ -111,7 +116,7 @@ export function makeCompletionEntity({ content }) {
                         content: {
                           type: 'String',
                           basicType: 'String',
-                          basicValue: content,
+                          basicValue: content ?? '',
                         },
                         role: {
                           type: 'String',
@@ -138,7 +143,7 @@ export function makeCompletionEntity({ content }) {
           model: {
             type: 'String',
             basicType: 'String',
-            basicValue: 'gpt-0-0000',
+            basicValue: modelUsed ?? 'gpt-0-0000',
           },
           object: {
             type: 'String',
@@ -159,12 +164,12 @@ export function makeCompletionEntity({ content }) {
               completion_tokens: {
                 type: 'Double',
                 basicType: 'Double',
-                basicValue: -1,
+                basicValue: tokensCompletion ?? -1,
               },
               prompt_tokens: {
                 type: 'Double',
                 basicType: 'Double',
-                basicValue: -1,
+                basicValue: tokensPrompt ?? -1,
               },
               total_tokens: {
                 type: 'Double',

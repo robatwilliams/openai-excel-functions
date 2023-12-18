@@ -81,7 +81,8 @@ CustomFunctions.associate('CHAT_COMPLETE', async (messages, params) => {
 });
 
 // Terminology note: our _cost_ is driven by usage and OpenAI's _prices_.
-CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
+CustomFunctions.associate('COST', cost);
+function cost(completionsMatrix, pricesMatrix) {
   const completions = completionsMatrix.flat().filter(
     (value) => value !== 0, // Empty value in range
   );
@@ -98,7 +99,7 @@ CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
     if (!modelPrices) {
       throw new CustomFunctions.Error(
         CustomFunctions.ErrorCode.invalidValue,
-        `No pricing specified for model ${model}`,
+        `No prices specified for model ${model}`,
       );
     }
 
@@ -108,7 +109,7 @@ CustomFunctions.associate('COST', (completionsMatrix, pricesMatrix) => {
       (usage.completion_tokens.basicValue / 1000) * modelPrices.output
     );
   }, 0);
-});
+}
 
 CustomFunctions.associate('COT_ANSWER', cotAnswer);
 function cotAnswer(completion, separator) {
@@ -184,6 +185,7 @@ function mapObject(object, callback) {
 // For unit testing.
 if (typeof module === 'object') {
   module.exports = {
+    cost,
     cotAnswer,
   };
 }
