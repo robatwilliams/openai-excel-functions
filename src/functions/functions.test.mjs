@@ -53,7 +53,7 @@ describe('CHAT_COMPLETE', () => {
     assert.strictEqual(requestBody.messages.length, 1);
   });
 
-  it('propagates only the user parameters to the API', async (t) => {
+  it('propagates only the user parameters to the API in the body', async (t) => {
     t.mock.method(global, 'fetch', () =>
       mockResponseOk(makeCompletionResponse()),
     );
