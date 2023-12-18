@@ -72,23 +72,9 @@ describe('CHAT_COMPLETE', () => {
   });
 
   it('does not propagate empty cells in the params range to the API', async (t) => {
-    const mockResponseBody = {
-      id: 'chatcmpl-8X6b8XW77Md4oc06Yd3tc18lFzqT9',
-      object: 'chat.completion',
-      created: 0,
-      model: 'gpt-3.5-turbo-0613',
-      choices: [
-        {
-          index: 0,
-          message: { role: 'assistant', content: 'Hello' },
-          logprobs: null,
-          finish_reason: 'stop',
-        },
-      ],
-      usage: { prompt_tokens: 78, completion_tokens: 23, total_tokens: 101 },
-      system_fingerprint: null,
-    };
-    t.mock.method(global, 'fetch', () => mockResponseOk(mockResponseBody));
+    t.mock.method(global, 'fetch', () =>
+      mockResponseOk(makeCompletionResponse()),
+    );
 
     await chatComplete(
       [['user', 'Say hello']],
