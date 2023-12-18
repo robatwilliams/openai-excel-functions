@@ -146,6 +146,7 @@ function cotAnswer(completion, separator) {
 
 function toEntityProperty(value) {
   if (value === null) {
+    // There is no concept of null in Excel's data model.
     return '';
   } else if (typeof value !== 'object') {
     return value;
