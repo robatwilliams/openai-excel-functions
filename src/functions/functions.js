@@ -1,4 +1,5 @@
 ﻿const COMPLETION_ENTITY_KIND = 'openai-excel-formulas:chat-completion';
+const EMPTY_OR_ZERO = 0;
 
 CustomFunctions.associate('CHAT_COMPLETE', chatComplete);
 async function chatComplete(messages, params) {
@@ -6,11 +7,11 @@ async function chatComplete(messages, params) {
     API_KEY: apiKey,
     API_BASE: apiBase = 'https://api.openai.com/',
     messages: _,
-    0: __, // Empty key cell in range
+    [EMPTY_OR_ZERO]: __,
     ...userParams
   } = Object.fromEntries(params);
 
-  if (apiKey == null || apiKey === 0) {
+  if (apiKey == null || apiKey === EMPTY_OR_ZERO) {
     throw new CustomFunctions.Error(
       CustomFunctions.ErrorCode.invalidValue,
       'API_KEY is required',
@@ -28,7 +29,7 @@ async function chatComplete(messages, params) {
     const requestBody = {
       ...userParams,
       messages: messages
-        .filter(([role]) => role !== 0)
+        .filter(([role]) => role !== EMPTY_OR_ZERO)
         .map(([role, content]) => ({ role, content })),
     };
 
@@ -86,9 +87,9 @@ async function chatComplete(messages, params) {
 // Terminology note: our _cost_ is driven by usage and OpenAI's _prices_.
 CustomFunctions.associate('COST', cost);
 function cost(completionsMatrix, pricesMatrix) {
-  const completions = completionsMatrix.flat().filter(
-    (value) => value !== 0, // Empty value in range
-  );
+  const completions = completionsMatrix
+    .flat()
+    .filter((value) => value !== EMPTY_OR_ZERO);
   completions.forEach(validateIsCompletion);
   const allPrices = Object.fromEntries(
     pricesMatrix.map((row) => [row[0], { input: row[1], output: row[2] }]),
