@@ -1,6 +1,6 @@
 # OpenAI API Functions for Excel
 
-> Create OpenAI chat completions from an Excel formula
+> Create OpenAI chat completions from Excel formulas
 
 Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` and helpers. Use the power of spreadsheets for prompt engineering, prompt decomposition, prototyping systems, and more.
 
@@ -27,11 +27,11 @@ See the [function metadata](https://github.com/robatwilliams/openai-excel-formul
 
 ## Using completion results
 
-Completions populate the cell with a custom data type which includes the complate API request and response, and whose text value is the content of the first completion choice.
+Completions populate the cell with a custom data type which includes the complete API request and response. Its text value is the content of the first completion choice.
 
-To view the completion data, open the entity card. The `_lines` property provides a convenience view of the completion content.
+To obtain the text value for use in formulas, use the `VALUETOTEXT()` function. To obtain other request/response data, use dot notation to the property path (e.g. `A123.response.model`).
 
-To obtain the text value for use in formulas, use the `VALUETOTEXT()` function. To obtain other request/response data, use dot notation to the property path.
+To view the completion data, open the entity card. The `_lines` property provides a line-by-line view of the completion content.
 
 To extract a final answer that follows a chain of thought, you could use a formula such as:
 
