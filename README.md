@@ -34,6 +34,8 @@ For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/
 
 See the [function metadata](https://github.com/robatwilliams/openai-excel-formulas/blob/main/src/functions/functions.json) for full documentation of functions and parameters. Excel's presentation of custom function documentation varies by platform, but is best in the _Insert Function_ dialog and/or the desktop platform.
 
+We advise caution to avoid unintentionally incurring excessive costs when working with many completion cells or expensive completions. Changes to dependency cells can cause mass recalculation, and certain actions in Excel can trigger full recalculation. You may wish to switch the calculation mode in Excel from automatic to manual.
+
 ## Using completion results
 
 Completions populate the cell with a custom data type which includes the complete API request and response. Its text value is the content of the first completion choice.
