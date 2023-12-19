@@ -68,6 +68,8 @@ Configure your IDE to adhere to the project code formatting. For VSCode, these w
 1. Generate and install certificates (`npm run install-certs`)
 1. Run the local server (`npm start`).
 
+Additionally you may need to navigate to the [root](https://localhost:3000/) in your browser and temporarily trust the newly created cert-key pair.
+
 ### Open in Excel web
 
 1. Open a spreadsheet in Excel on the web and append the following query string parameters
