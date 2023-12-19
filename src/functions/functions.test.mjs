@@ -12,6 +12,7 @@ describe('CHAT_COMPLETE', () => {
     const completion = await chatComplete(
       [['user', 'Say hello']],
       [['API_KEY', 'someapikey']],
+      {},
     );
 
     const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
@@ -27,7 +28,7 @@ describe('CHAT_COMPLETE', () => {
       mockResponseOk(makeCompletionResponse()),
     );
 
-    await chatComplete([['Say hello']], [['API_KEY', 'someapikey']]);
+    await chatComplete([['Say hello']], [['API_KEY', 'someapikey']], {});
 
     const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
     assert.deepStrictEqual(requestBody.messages[1], {
@@ -47,6 +48,7 @@ describe('CHAT_COMPLETE', () => {
         [0, 0],
       ],
       [['API_KEY', 'someapikey']],
+      {},
     );
 
     const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
@@ -64,6 +66,7 @@ describe('CHAT_COMPLETE', () => {
         ['API_KEY', 'someapikey'],
         ['temperature', 0.3],
       ],
+      {},
     );
 
     const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
@@ -82,6 +85,7 @@ describe('CHAT_COMPLETE', () => {
         ['API_KEY', 'someapikey'],
         [0, 0],
       ],
+      {},
     );
 
     const requestBody = JSON.parse(fetch.mock.calls[0].arguments[1].body);
@@ -89,17 +93,25 @@ describe('CHAT_COMPLETE', () => {
   });
 
   it('throws an error when no API key is provided - key absent', () => {
-    assert.rejects(() => chatComplete([['Say hello']], []), {
-      code: '#VALUE!',
-      message: 'API_KEY is required',
-    });
+    assert.rejects(
+      () => chatComplete([['Say hello']], []),
+      {
+        code: '#VALUE!',
+        message: 'API_KEY is required',
+      },
+      {},
+    );
   });
 
   it('throws an error when no API key is provided - value cell empty', () => {
-    assert.rejects(() => chatComplete([['Say hello']], [['API_KEY', 0]]), {
-      code: '#VALUE!',
-      message: 'API_KEY is required',
-    });
+    assert.rejects(
+      () => chatComplete([['Say hello']], [['API_KEY', 0]]),
+      {
+        code: '#VALUE!',
+        message: 'API_KEY is required',
+      },
+      {},
+    );
   });
 
   it('throws an error for an API error with a provided message', (t) => {
@@ -122,7 +134,7 @@ describe('CHAT_COMPLETE', () => {
     );
 
     assert.rejects(
-      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']]),
+      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']], {}),
       {
         code: '#N/A',
         message: "API error: 0 is less than the minimum of 1 - 'n'",
@@ -151,7 +163,7 @@ describe('CHAT_COMPLETE', () => {
     );
 
     assert.rejects(
-      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']]),
+      () => chatComplete([['Say hello']], [['API_KEY', 'someapikey']], {}),
       {
         code: '#N/A',
         message: 'API error: 502 Bad Gateway',
