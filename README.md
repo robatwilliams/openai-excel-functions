@@ -17,6 +17,15 @@ Add the add-in to Excel by following the [sideloading instructions for your plat
 
 Type `=OAI.` in the formula bar or a cell, and you should see the new functions.
 
+<details>
+<summary>Uninstallation</summary>
+
+For Excel on the web, clear your browser's cookies for its domain.
+
+For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/clear-cache).
+
+</details>
+
 ## Usage
 
 `OAI.CHAT_COMPLETE()` calls the API to create completions.
