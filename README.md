@@ -45,7 +45,7 @@ To view the completion data, open the entity card. The `_lines` property provide
 To extract a final answer that follows a chain of thought, you could use a formula such as:
 
 ```
-=TRIM(TEXTAFTER(VALUETOTEXT(A123), "<!-- END CoT -->"))
+=TEXTAFTER(VALUETOTEXT(A123), "<!-- END CoT -->" & CHAR(10))
 ```
 
 ## File descriptions
