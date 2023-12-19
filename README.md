@@ -50,20 +50,7 @@ To extract a final answer that follows a chain of thought, you could use a formu
 =TEXTAFTER(VALUETOTEXT(A123), "<!-- END CoT -->" & CHAR(10))
 ```
 
-## File descriptions
-
-| Path | Description |
-| --- | --- |
-| assets/\*.png | Icons of various sizes |
-| src/functions/functions.js | The JavaScript functions which implement the formulas. |
-| src/functions/functions.json | The metadata which details each formula and references its implementation. |
-| index.html | Root page loaded in the background during plugin startup. |
-| manifest-local.xml | A version of manifest.xml which references https://localhost:3000/ for plugin development use. |
-| manifest.xml | Configures where the plugin should be loaded from and what features it will make use of. |
-| package[-lock].json | Lists NPM dependencies. Used only during plugin development. |
-| README.md | This file. |
-
-## Plugin development
+## Add-in development
 
 ### Prerequisites
 
@@ -91,10 +78,20 @@ wdaddindevserverport=3000&wdaddinmanifestfile=manifest-localhost.xml&wdaddinmani
 
 2. If you are prompted to enable Excel developer mode, do so.
 
-You should now be able to use the formulas as normal. If you make a change to `index.html` or `src/*`, you will need to reload the browser window.
+You should now be able to use the functions as normal. When you make a change, you'll need to reload the browser window.
 
 ### Open in Excel desktop
 
 ```bash
 npm run sideload:desktop
 ```
+
+### Key files
+
+| Path | Description |
+| --- | --- |
+| src/functions/functions.js | The JavaScript functions which implement the functions. |
+| src/functions/functions.json | The metadata which details each function and references its implementation. |
+| shared.html | Root page loaded in the background during add-in startup. |
+| manifest-local.xml | A version of manifest.xml which references https://localhost:3000/ for add-in development use. |
+| manifest.xml | Configures where the add-in should be loaded from and what features it will make use of. |
