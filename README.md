@@ -9,7 +9,10 @@ Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` and helpers
 - Free - use your own API key
 - Confidential - calls go directly to OpenAI's API
 - Comprehensive - supports all models and parameters
+- Observable - view and use all API request and response data
 - Open source
+
+Built with generative AI developers in mind - other products are available which may be more suitable for using generative AI in general spreadsheets. As a rule, we don't include convenience functions for tasks that can be reasonably accomplished using built-in Excel functions.
 
 ## Installation
 
