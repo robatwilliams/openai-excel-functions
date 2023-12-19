@@ -1,10 +1,43 @@
-# OpenAI API Formulas for Excel
+# OpenAI API Functions for Excel
 
-## Usage instructions
+> Create OpenAI chat completions from an Excel formula
 
-1. Add the plugin to Excel by following the [sideloading instructions for your platform](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing).
-2. Start typing the following in a formula bar `OAI.` and you should see the formulas associated with this plugin.
-3. For a full description of each function, see `src/functions.json`.
+Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` and helpers. Use the power of spreadsheets for prompt engineering, prompt decomposition, prototyping systems, and more.
+
+## Why this add-in
+
+- Free - use your own API key
+- Confidential - calls go directly to OpenAI's API
+- Comprehensive - supports all models and parameters
+- Open source
+
+## Installation
+
+Add the add-in to Excel by following the [sideloading instructions for your platform](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing) (it isn't published to the Office Store).
+
+Type `=OAI.` in the formula bar or a cell, and you should see the new functions.
+
+## Usage
+
+`OAI.CHAT_COMPLETE()` calls the API to create completions.
+
+`OAI.COST()` calculates the billing cost of completion cell(s).
+
+See the [function metadata](https://github.com/robatwilliams/openai-excel-formulas/blob/main/src/functions/functions.json) for full documentation of functions and parameters. Excel's presentation of custom function documentation varies by platform, but is best in the _Insert Function_ dialog and/or the desktop platform.
+
+## Using completion results
+
+Completions populate the cell with a custom data type which includes the complate API request and response, and whose text value is the content of the first completion choice.
+
+To view the completion data, open the entity card. The `_lines` property provides a convenience view of the completion content.
+
+To obtain the text value for use in formulas, use the `VALUETOTEXT()` function. To obtain other request/response data, use dot notation to the property path.
+
+To extract a final answer that follows a chain of thought, you could use a formula such as:
+
+```
+=TRIM(TEXTAFTER(VALUETOTEXT(A123), "<!-- END CoT -->"))
+```
 
 ## File descriptions
 
