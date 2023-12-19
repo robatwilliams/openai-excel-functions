@@ -24,27 +24,6 @@
       }
     },
     {
-      "description": "Extract the answer part from a Chain of Thought (CoT) completion",
-      "id": "COT_ANSWER",
-      "name": "COT_ANSWER",
-      "parameters": [
-        {
-          "name": "completion",
-          "description": "The completion to extract the answer from",
-          "type": "any"
-        },
-        {
-          "name": "separator",
-          "description": "The separator that denotes the end of the CoT reasoning and the beginning of the answer. The default separator is <!-- END CoT -->. Your completion prompt must instruct the model to produce this separator, by using wording such as 'Then state \"<!-- END CoT -->\" followed by your answer.'.",
-          "type": "string",
-          "optional": true
-        }
-      ],
-      "result": {
-        "type": "string"
-      }
-    },
-    {
       "description": "Calculate the cost of the completions in the given cells",
       "id": "COST",
       "name": "COST",

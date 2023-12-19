@@ -115,36 +115,6 @@ function cost(completionsMatrix, pricesMatrix) {
   }, 0);
 }
 
-CustomFunctions.associate('COT_ANSWER', cotAnswer);
-function cotAnswer(completion, separator) {
-  validateIsCompletion(completion);
-
-  if (separator === null) {
-    // This default value must be kept in sync with documentation in the function metadata.
-    separator = '<!-- END CoT -->';
-  }
-
-  const choiceIndex = 0;
-  const choiceEntity =
-    completion.properties.response.properties.choices.elements[0][choiceIndex];
-  const choiceContent =
-    choiceEntity.properties.message.properties.content.basicValue;
-  const halves = choiceContent.split(separator, 2);
-
-  if (halves.length !== 2) {
-    throw new CustomFunctions.Error(
-      CustomFunctions.ErrorCode.invalidValue,
-      'Completion does not split into two by the separator',
-    );
-  }
-
-  const answer = halves[1];
-
-  // Models have a strong tendency to put a newline after the separator, and
-  // it's difficult to prompt GPT 3.5T to consistently do anything different.
-  return answer[0] === '\n' ? answer.substring(1) : answer;
-}
-
 function toEntityProperty(value) {
   if (value === null) {
     // There is no concept of null in Excel's data model.
@@ -192,6 +162,5 @@ if (typeof module === 'object') {
   module.exports = {
     chatComplete,
     cost,
-    cotAnswer,
   };
 }
