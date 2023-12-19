@@ -2,7 +2,7 @@
 const EMPTY_OR_ZERO = 0;
 
 CustomFunctions.associate('CHAT_COMPLETE', chatComplete);
-async function chatComplete(messages, params) {
+async function chatComplete(messages, params, invocation) {
   const {
     API_KEY: apiKey,
     API_BASE: apiBase = 'https://api.openai.com/',
@@ -33,6 +33,9 @@ async function chatComplete(messages, params) {
         .map(([role, content]) => ({ role, content })),
     };
 
+    const abortController = new AbortController();
+    invocation.onCanceled = () => abortController.abort();
+
     const response = await fetch(`${apiBase}v1/chat/completions`, {
       method: 'POST',
       headers: {
@@ -40,6 +43,7 @@ async function chatComplete(messages, params) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify(requestBody),
+      signal: abortController.signal,
     });
 
     if (

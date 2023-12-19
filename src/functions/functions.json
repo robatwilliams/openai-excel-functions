@@ -5,6 +5,9 @@
       "description": "Complete the chat using a model",
       "id": "CHAT_COMPLETE",
       "name": "CHAT_COMPLETE",
+      "options": {
+        "cancelable": true
+      },
       "parameters": [
         {
           "name": "messages",
