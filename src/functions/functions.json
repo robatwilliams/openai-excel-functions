@@ -2,7 +2,7 @@
   "allowCustomDataForDataTypeAny": true,
   "functions": [
     {
-      "description": "Complete the chat using a model",
+      "description": "Create a model completion for the given chat coversation",
       "id": "CHAT_COMPLETE",
       "name": "CHAT_COMPLETE",
       "options": {
@@ -11,13 +11,13 @@
       "parameters": [
         {
           "name": "messages",
-          "description": "Either a single message (which will be used as the content of a user message and prefixed with a default system message) or a range of cells containing messages (the first column will be used as the role, the second column as the message and subsequent columns will be ignored).",
+          "description": "The conversation so far. Either a single message (which will be used as the content of a user message and prefixed with a default system message), or a range of cells containing messages (the first column will be used as the role, and the second column as the message).",
           "type": "string",
           "dimensionality": "matrix"
         },
         {
           "name": "params",
-          "description": "The parameters for the model call. The first column is used as parameter keys and the second as values. Subsequent columns are ignored. If a key is repeated in later rows, the value given in the later row replaces the value given in the earlier row.",
+          "description": "The parameters for the model call. The first column is used as parameter keys and the second as values. The API_KEY parameter is required.",
           "type": "any",
           "dimensionality": "matrix"
         }
