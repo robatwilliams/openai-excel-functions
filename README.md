@@ -14,6 +14,10 @@ Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` and helpers
 
 Built with generative AI developers in mind - other products are available which may be more suitable for using generative AI in general spreadsheets. As a rule, we don't include convenience functions for tasks that can be reasonably accomplished using built-in Excel functions.
 
+## Blog
+
+Read our post [_@@@@@ Blog Post Title @@@@@_]() on the Scott Logic blog, where you'll also find much more about [artificial intelligence](https://blog.scottlogic.com/category/ai.html) and all things software.
+
 ## Installation
 
 Add the add-in to Excel by following the [sideloading instructions for your platform](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing) (it isn't published to the Office Store).
