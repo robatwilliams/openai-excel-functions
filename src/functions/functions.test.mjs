@@ -181,10 +181,10 @@ describe('COST', () => {
     });
     const prices = [['gpt-4-0613', 0.03, 0.06]];
 
-    assert.strictEqual(cost([[completion]], prices), 0.24);
+    assert.deepStrictEqual(cost([[completion]], prices), [[0.24]]);
   });
 
-  it('calculates the cost for a range of completions including empty cells', () => {
+  it('calculates the costs for a range of completions including empty cells', () => {
     const completion = makeCompletionEntity({
       modelUsed: 'gpt-4-0613',
       tokensPrompt: 1000,
@@ -197,7 +197,11 @@ describe('COST', () => {
     ];
     const prices = [['gpt-4-0613', 0.03, 0.06]];
 
-    assert.strictEqual(cost(completions, prices), 0.27);
+    assert.deepStrictEqual(cost(completions, prices), [
+      [0.09, 0.09],
+      [0.09, 0],
+      [0, 0],
+    ]);
   });
 
   it('throws an error when no prices are specified for the model used', () => {

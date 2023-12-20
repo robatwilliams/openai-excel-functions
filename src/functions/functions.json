@@ -27,7 +27,7 @@
       }
     },
     {
-      "description": "Calculate the cost of the completions in the given cells",
+      "description": "Calculate the costs of the completions in the given cells",
       "id": "COST",
       "name": "COST",
       "parameters": [
@@ -45,7 +45,8 @@
         }
       ],
       "result": {
-        "type": "number"
+        "type": "number",
+        "dimensionality": "matrix"
       }
     }
   ]

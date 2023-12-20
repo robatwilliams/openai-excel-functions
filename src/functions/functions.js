@@ -91,32 +91,35 @@ async function chatComplete(messages, params, invocation) {
 // Terminology note: our _cost_ is driven by usage and OpenAI's _prices_.
 CustomFunctions.associate('COST', cost);
 function cost(completionsMatrix, pricesMatrix) {
-  const completions = completionsMatrix
-    .flat()
-    .filter((value) => value !== EMPTY_OR_ZERO);
-  completions.forEach(validateIsCompletion);
   const allPrices = Object.fromEntries(
     pricesMatrix.map((row) => [row[0], { input: row[1], output: row[2] }]),
   );
 
-  return completions.reduce((accumulator, completion) => {
-    const model = completion.properties.response.properties.model.basicValue;
-    const usage = completion.properties.response.properties.usage.properties;
-    const modelPrices = allPrices[model];
+  return completionsMatrix.map((row) =>
+    row.map((cell) => {
+      if (cell === EMPTY_OR_ZERO) {
+        return 0;
+      } else {
+        validateIsCompletion(cell);
+      }
 
-    if (!modelPrices) {
-      throw new CustomFunctions.Error(
-        CustomFunctions.ErrorCode.invalidValue,
-        `No prices specified for model ${model}`,
+      const model = cell.properties.response.properties.model.basicValue;
+      const usage = cell.properties.response.properties.usage.properties;
+      const modelPrices = allPrices[model];
+
+      if (!modelPrices) {
+        throw new CustomFunctions.Error(
+          CustomFunctions.ErrorCode.invalidValue,
+          `No prices specified for model ${model}`,
+        );
+      }
+
+      return (
+        (usage.prompt_tokens.basicValue / 1000) * modelPrices.input +
+        (usage.completion_tokens.basicValue / 1000) * modelPrices.output
       );
-    }
-
-    return (
-      accumulator +
-      (usage.prompt_tokens.basicValue / 1000) * modelPrices.input +
-      (usage.completion_tokens.basicValue / 1000) * modelPrices.output
-    );
-  }, 0);
+    }),
+  );
 }
 
 function toEntityProperty(value) {

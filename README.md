@@ -37,7 +37,7 @@ For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/
 
 `OAI.CHAT_COMPLETE()` calls the API to create completions.
 
-`OAI.COST()` calculates the billing cost of completion cell(s).
+`OAI.COST()` calculates the billing cost(s) of completion cell(s). Wrap it with `SUM()` to calculate a total.
 
 See the [function metadata](https://github.com/robatwilliams/openai-excel-formulas/blob/main/src/functions/functions.json) for full documentation of functions and parameters. Excel's presentation of custom function documentation varies by platform, but is best in the _Insert Function_ dialog and/or the desktop platform.
 
