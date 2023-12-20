@@ -59,6 +59,9 @@ To extract a final answer that follows a chain of thought, you could use a formu
 
 ## Add-in development
 
+<details>
+<summary>Instructions for getting started with development work</summary>
+
 ### Prerequisites
 
 If you're on Windows, configure NPM to use a sh-compatible shell, e.g:
@@ -104,3 +107,5 @@ npm run sideload:desktop
 | shared.html | Root page loaded in the background during add-in startup. |
 | manifest-local.xml | A version of manifest.xml which references https://localhost:3000/ for add-in development use. |
 | manifest.xml | Configures where the add-in should be loaded from and what features it will make use of. |
+
+</details>
