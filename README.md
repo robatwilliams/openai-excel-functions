@@ -20,14 +20,21 @@ Read our post [_@@@@@ Blog Post Title @@@@@_]() on the Scott Logic blog, where y
 
 ## Installation
 
-Add the add-in to Excel by following the [sideloading instructions for your platform](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing) (it isn't published to the Office Store).
+The add-in is installed via a "sideloading" process, in which you load the manifest file into Excel, which then loads the add-in code directly from GitHub. It's not published to the Office Store.
+
+First, download the [`manifest.xml`](./manifest.xml) file. You won't need to modify this or download anything else - disregard any such instructions in the following linked instructions.
+
+Follow the [sideloading instructions for your platform](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing):
+
+- On web, use the "manually sideload" technique.
+- On Windows, use the "configure trust manually" option at the relevant step.
 
 Type `=OAI.` in the formula bar or a cell, and you should see the new functions.
 
 <details>
 <summary>Uninstallation</summary>
 
-For Excel on the web, clear your browser's cookies for its domain.
+On web, clear your browser's cookies for its domain.
 
 For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/office/dev/add-ins/testing/clear-cache).
 
