@@ -16,6 +16,10 @@ Built with generative AI developers in mind - other products are available which
 
 ## Blog
 
+<!-- prettier-ignore -->
+> [!NOTE]
+> Coming soon
+
 Read our post [_@@@@@ Blog Post Title @@@@@_]() on the Scott Logic blog, where you'll also find much more about [artificial intelligence](https://blog.scottlogic.com/category/ai.html) and all things software.
 
 ## Installation
