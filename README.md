@@ -2,7 +2,7 @@
 
 > Create OpenAI chat completions from Excel formulas
 
-Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` and helpers. Use the power of spreadsheets for prompt engineering, prompt decomposition, prototyping systems, and more.
+Developer oriented Excel add-in that provides `=OAI.CHAT_COMPLETE()` to call the completions API, and helpers. Use the power of spreadsheets for prompt engineering, prompt decomposition, prototyping systems, and more.
 
 ## Why this add-in
 
