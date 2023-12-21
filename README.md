@@ -39,7 +39,7 @@ For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/
 
 `OAI.COST()` calculates the billing cost(s) of completion cell(s). Wrap it with `SUM()` to calculate a total.
 
-See the [function metadata](https://github.com/robatwilliams/openai-excel-formulas/blob/main/src/functions/functions.json) for full documentation of functions and parameters. Excel's presentation of custom function documentation varies by platform, but is best in the _Insert Function_ dialog and/or the desktop platform.
+See the [function metadata](https://github.com/robatwilliams/openai-excel-functions/blob/main/src/functions/functions.json) for full documentation of functions and parameters. Excel's presentation of custom function documentation varies by platform, but is best in the _Insert Function_ dialog and/or the desktop platform.
 
 We advise caution to avoid unintentionally incurring excessive costs when working with many completion cells or expensive completions. Changes to dependency cells can cause mass recalculation, and certain actions in Excel can trigger full recalculation. You may wish to switch the calculation mode in Excel from automatic to manual.
 

@@ -13,7 +13,7 @@ export function makeCompletionEntity({
       _entityKind: {
         type: 'String',
         basicType: 'String',
-        basicValue: 'openai-excel-formulas:chat-completion',
+        basicValue: 'openai-excel-functions:chat-completion',
       },
       _lines: undefined, // Not for programmatic use
       requestBody: {

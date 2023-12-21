@@ -1,9 +1,9 @@
 {
-  "name": "openai-excel-formulas",
+  "name": "openai-excel-functions",
   "version": "1.0.0",
   "private": true,
   "description": "Invoke the OpenAI API calls from formula.",
-  "homepage": "https://github.com/robatwilliams/openai-excel-formulas",
+  "homepage": "https://github.com/robatwilliams/openai-excel-functions",
   "license": "ISC",
   "author": "Chris Price & Robat Williams",
   "main": "index.js",

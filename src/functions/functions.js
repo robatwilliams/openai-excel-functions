@@ -58,7 +58,7 @@ class ConcurrencyLimitedFetch {
   }
 }
 
-const COMPLETION_ENTITY_KIND = 'openai-excel-formulas:chat-completion';
+const COMPLETION_ENTITY_KIND = 'openai-excel-functions:chat-completion';
 const EMPTY_OR_ZERO = 0;
 
 const fetcher = new ConcurrencyLimitedFetch();
