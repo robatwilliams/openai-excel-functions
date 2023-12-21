@@ -36,7 +36,7 @@ export default class ConcurrencyLimitedFetch {
   _process() {
     if (
       this._queue.length === 0 ||
-      this._pendingCount > ConcurrencyLimitedFetch._PENDING_LIMIT
+      this._pendingCount >= ConcurrencyLimitedFetch._PENDING_LIMIT
     ) {
       return;
     }
@@ -45,6 +45,7 @@ export default class ConcurrencyLimitedFetch {
 
     if (task.args.options.signal.aborted) {
       task.reject(task.args.options.signal.reason);
+      return;
     }
 
     this._pendingCount++;
