@@ -6,7 +6,6 @@
   "homepage": "https://github.com/robatwilliams/openai-excel-functions",
   "license": "ISC",
   "author": "Chris Price & Robat Williams",
-  "main": "index.js",
   "scripts": {
     "install-certs": "office-addin-dev-certs install --days 3650",
     "prettier:check": "prettier --check .",
