@@ -56,7 +56,7 @@ Completions populate the cell with a custom data type which includes the complet
 
 To obtain the text value for use in formulas, use the `VALUETOTEXT()` function. To obtain other request/response data, use dot notation to the property path (e.g. `A123.response.model`).
 
-To view the completion data, open the entity card. The `_lines` property provides a line-by-line view of the completion content.
+To view the completion data, open the entity card. The `lines` property provides a line-by-line view of the completion content.
 
 To extract a final answer that follows a chain of thought, you could use a formula such as:
 

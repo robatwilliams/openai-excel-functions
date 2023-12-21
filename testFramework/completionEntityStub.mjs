@@ -8,14 +8,14 @@ export function makeCompletionEntity({
     type: 'Entity',
     basicType: 'Error',
     basicValue: '#VALUE!',
-    text: undefined, // Not for programmatic use
+    text: content ?? '',
     properties: {
       _entityKind: {
         type: 'String',
         basicType: 'String',
         basicValue: 'openai-excel-functions:chat-completion',
       },
-      _lines: undefined, // Not for programmatic use
+      lines: (content ?? '').split('\n'),
       requestBody: {
         type: 'Entity',
         basicType: 'Error',

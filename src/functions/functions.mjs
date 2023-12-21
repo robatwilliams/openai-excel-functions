@@ -73,7 +73,7 @@ export async function chatComplete(messages, params, invocation) {
         _entityKind: COMPLETION_ENTITY_KIND,
 
         // For visibility of newlines without needing to use cell text wrap.
-        _lines:
+        lines:
           json.choices.length === 1
             ? json.choices[0].message.content.split('\n')
             : json.choices.map((choice) => choice.message.content.split('\n')),
