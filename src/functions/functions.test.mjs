@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import { makeCompletionEntity } from '../../testFramework/completionEntityStub.mjs';
-import { chatComplete, cost } from './functions.js';
 import { makeCompletionResponse } from '../../testFramework/completionResponseStub.mjs';
+import { chatComplete, cost } from './functions.mjs';
 
 describe('CHAT_COMPLETE', () => {
   it('makes a completion for given messages', async (t) => {

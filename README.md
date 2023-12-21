@@ -109,8 +109,8 @@ npm run sideload:desktop
 
 | Path | Description |
 | --- | --- |
-| src/functions/functions.js | The JavaScript functions which implement the functions. |
 | src/functions/functions.json | The metadata which details each function and references its implementation. |
+| src/functions/functions.mjs | The JavaScript functions which implement the functions. |
 | shared.html | Root page loaded in the background during add-in startup. |
 | manifest-local.xml | A version of manifest.xml which references https://localhost:3000/ for add-in development use. |
 | manifest.xml | Configures where the add-in should be loaded from and what features it will make use of. |
