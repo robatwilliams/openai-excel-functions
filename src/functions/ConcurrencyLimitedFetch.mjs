@@ -12,6 +12,8 @@ export default class ConcurrencyLimitedFetch {
    *   scenarios in reasonable time.
    * Low enough to avoid incurring excessive costs before the user has a chance
    *   to cancel, even for large model input/output sizes.
+   *
+   * Keep the readme in sync with this behaviour and chosen limit.
    */
   static _PENDING_LIMIT = 10;
 

@@ -54,7 +54,7 @@ See the [function metadata](https://github.com/robatwilliams/openai-excel-functi
 
 <!-- prettier-ignore -->
 > [!CAUTION]
-> We advise caution to avoid unintentionally incurring excessive costs when working with many completion cells or expensive completions. Changes to dependency cells can cause mass recalculation, and certain actions in Excel can trigger full recalculation. You may wish to switch the calculation mode in Excel from automatic to manual.
+> We advise caution to avoid unintentionally incurring excessive costs when working with many completion cells or expensive completions. Changes to dependency cells can cause mass recalculation, and certain actions in Excel can trigger full recalculation. You may wish to switch the calculation mode in Excel from automatic to manual. A maximum of 10 API requests are made in parallel - to cancel waiting or pending requests, undo your change or delete the formula.
 
 ## Using completion results
 
