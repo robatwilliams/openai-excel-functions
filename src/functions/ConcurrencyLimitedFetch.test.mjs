@@ -71,6 +71,29 @@ describe('ConcurrencyLimitedFetch', () => {
     await assert.rejects(aborted, 'AbortError: This operation was aborted');
     assert.strictEqual(fetch.mock.callCount(), 10);
   });
+
+  it('fetches the next queued when encountering an aborted in the queue', async (t) => {
+    const fetcher = new ConcurrencyLimitedFetch();
+
+    t.mock.method(global, 'fetch', () => new Promise(() => {}));
+    for (let i = 0; i < 9; i++) {
+      fetcher.fetch('', makeFetchOptions());
+    }
+
+    // Will resolve on next flush
+    t.mock.method(global, 'fetch', () => Promise.resolve());
+    fetcher.fetch('', makeFetchOptions());
+
+    const abortController = new AbortController();
+    assert.rejects(fetcher.fetch('', makeFetchOptions({ abortController })));
+    abortController.abort();
+
+    // Will be fetched when 10th resolves
+    fetcher.fetch('', makeFetchOptions());
+
+    await flushPromises();
+    assert.strictEqual(fetch.mock.callCount(), 2);
+  });
 });
 
 function makeFetchOptions({ abortController } = {}) {

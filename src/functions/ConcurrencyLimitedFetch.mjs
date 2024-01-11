@@ -47,6 +47,7 @@ export default class ConcurrencyLimitedFetch {
 
     if (task.args.options.signal.aborted) {
       task.reject(task.args.options.signal.reason);
+      this._process();
       return;
     }
 
