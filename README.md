@@ -42,7 +42,7 @@ For other platforms, [clear the Office cache](https://learn.microsoft.com/en-us/
 
 ## Usage
 
-`OAI.CHAT_COMPLETE()` calls the API to create completions.
+`OAI.CHAT_COMPLETE()` calls the API to create completions. It is typical to setup a sheet containing default parameters for the model call. The first column is used as parameter keys and the second as values. The API_KEY parameter is required and its value should be sourced from the OpenAI console.
 
 `OAI.COST()` calculates the billing cost(s) of completion cell(s). Wrap it with `SUM()` to calculate a total.
 
